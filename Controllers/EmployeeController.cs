@@ -11,6 +11,7 @@ namespace WebApplication3.Controllers
     public class EmployeeController : Controller
     {
 
+
         private readonly EmployeeDbContext _db;
 
         EmployeeViewModel _objModel;

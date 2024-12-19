@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+
+
+}
+
+@section scripts{
+
+    <script src="~/lib/bootstrap-table-master/dist/extensions/export/bootstrap-table-export.js"></script>
+    <script src="~/lib/bootstrap-table-master/dist/extensions/resizable/bootstrap-table-resizable.min.js"></script>
+ }
+
+
+<div class="text-center">
+    <h4 >Welcome</h4>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div>
+ 
+
+    <table id="table" class="table table-sm"
+           data-toggle="table"
+           data-height="450" 
+           data-pagination="true"
+           data-search="true"
+           data-search-highlighter="true"
+           data-url="https://examples.wenzhixin.net.cn/examples/bootstrap_table/data">
+        <thead>
+            <tr>
+                <th data-field="id" class="text-center" data-sortable="true">ID</th>
+                <th data-field="name" class="text-center"  data-sortable="true">Item Name</th>
+                <th data-field="price" class="text-center"  data-sortable="true">
+                    <i class="fa fa-star"></i> Item Price
+                </th>
+            </tr>
+        </thead>
+    </table>
+
+</div>
+
+

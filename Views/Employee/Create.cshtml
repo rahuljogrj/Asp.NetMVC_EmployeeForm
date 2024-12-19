@@ -1,0 +1,115 @@
+﻿@model WebApplication3.Models.EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Employee";
+    var successMessage = TempData["successMessage"]?.ToString();
+    var errorMessage = TempData["errorMessage"]?.ToString();
+
+}
+
+@section script{
+    <script src="~/js/Employee/jsEmployee.js"></script>
+}
+
+
+<div class="HeaderButton">
+    <h5>@ViewData["Title"]</h5>
+    <div class="text-center">
+        <button id="addemployee" class="btn btn-sm btn-primary" onclick="Submit()">Submit</button>
+    </div>
+</div>
+
+<hr />
+
+
+<input type="hidden" class="form-control" asp-for="Id" id="Id" disabled />
+
+ 
+<div class="form-group" id="Header">
+        <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <lable class="form-label col-sm-6 col-md-4 col-lg-4">First Name</lable>
+                <input type="text" class="form-control" asp-for="FirstName" id="FirstName" data-required="true" data-message="First Name cannot be blank!" />
+                <span asp-validation-for="FirstName" class="text-danger"> </span>
+             </div> 
+            </div> 
+            </div>
+
+
+        <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <lable class="form-label col-sm-6 col-md-4 col-lg-4">Last Name</lable>
+            <input type="text" class="form-control" asp-for="LastName" id="LastName" data-reuired="true" data-message="Last Name cannot be blank!" />
+                <span asp-validation-for="LastName" class="text-danger"> </span>
+        </div>
+    </div>
+</div>
+
+            <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                    <lable class="form-label col-sm-6 col-md-4 col-lg-4"> Date of Birth</lable>
+            <input type="date" class="form-control" asp-for="DateOfBirth" id="DateOfBirth" data-required="true" data-message="Date Of Birth cannot be blank!" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"> </span>
+            </div>
+            </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                    <lable class="form-label col-sm-6 col-md-4 col-lg-4">E-mail</lable>
+            <input type="email" class="form-control" asp-for="Email" id="Email" data-required="true" data-message="Email cannot be blank!" />
+                <span asp-validation-for="Email" class="text-danger"> </span>
+            </div>
+            </div>
+            </div>
+
+                    <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                    <lable class="form-label col-sm-6 col-md-4 col-lg-4">Salary</lable>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                <input type="text" onkeypress="return isNumeric(event)" class="form-control" asp-for="Salary" id="Salary" data-required="true" data-message="Salary cannot be blank!" />
+                </div>
+                <span asp-validation-for="Salary" class="text-danger"> </span>
+            </div>
+            </div>
+            </div>
+ 
+          @*  <div class="text-center">
+                <button id="addemployee" class="btn btn-sm btn-primary" onclick="Submit()">Submit</button>
+            </div>*@
+    </div>
+</div>
+
+<table id="table" class="table table-sm"
+       data-height="400"
+       data-toggle="table"
+       data-pagination="true"
+       data-search="true"
+       data-search-highlighter="true"
+       data-url="@Url.Content("~/Employee/GetEmployee")">
+    <thead>
+        <tr>
+            <th data-field="id" data-visible="false" class="text-center">Id</th>
+            <th data-field="fullName" class="text-center">Name</th>
+            <th data-field="dateOfBirth" class="text-center">Date Of Birth</th>
+            <th data-field="email" class="text-center">E-Mail</th>
+            <th data-field="salary" class="text-center">Salary</th>
+            <th data-field="statusID" class="text-center">Emp Status</th>
+            <th data-field="operate" data-formatter="operateFormatter" class="text-center">Action</th>
+        </tr>
+    </thead>
+</table>
+
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

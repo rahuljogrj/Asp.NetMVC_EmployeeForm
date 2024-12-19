@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebApplication3</title>
+
+     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />   
+    <link rel="stylesheet" href="~/WebApplication3.styles.css" asp-append-version="true" />
+     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+     <link rel="stylesheet" href="~/lib/bootstrap-table-master/dist/bootstrap-table.css" />
+
+
+
+</head>
+<body id="body-pd">
+
+    <div class="container-fluid">
+        <header class=" box-shadow">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+                <div class="container">
+                    <div class="header" id="header">
+                    <div class="header_toggle me-3"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button> 
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                       @* <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">Employee</a>
+                            </li>
+                          
+                        </ul>*@
+
+                             <ul class="navbar-nav flex-grow-1 m-auto fixed-columns-right justify-content-end me-2">
+                                <li class="nav-item">
+                                    <div class="d-flex align-content-center p-2" id="CountData" style="background-color:aqua;border-radius:20px;margin-right:0px">
+                                        <h6 class="text-center m-auto" id="CountText">Total Welcome Record</h6>
+                                        <h4 id="CountRecord"><strong class="ms-2">asa</strong></h4>
+                                    </div>
+                                </li>
+                            </ul> 
+                    </div>
+
+                    <div class="header_img"> <img src="https://i.imgur.com/hczKIze.jpg" alt=""> </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="l-navbar" id="nav-bar">
+            <nav class="nav">
+                <div>
+                    <a class="nav_logo"> <i class="bx bx-building nav_logo-icon"></i> <h5 class="nav_logo-name">IBIS-ERP</h5> </a>
+                    <div class="nav_list">
+                        <a href="@Url.Action("Index", "Home")" class="nav_link">
+                            <i class="bx bx-grid-alt nav_icon"></i> <span class="nav_name">Home</span>
+                        </a>
+                        <a href="@Url.Action("Index", "Employee")" class="nav_link">
+                            <i class="bx bx-user nav_icon"></i> <span class="nav_name">Employee</span>
+                        </a>
+                        <a href="@Url.Action("Privacy", "Home")" class="nav_link">
+                            <i class="bx bx-lock nav_icon"></i> <span class="nav_name">Privacy</span>
+                        </a>
+ 
+ 
+                    </div>
+                </div>
+                <a href="#" class="nav_link"> <i class="bx bx-log-out nav_icon"></i> <span class="nav_name">SignOut</span> </a>
+            </nav>
+        </div>
+
+
+ 
+        <div class="container-fluid container-fluid-sm">
+
+            <main role="main" class="">
+
+                <div id="dvajax" class="dvajaxprogress">
+                    <div id="dvajaximg" class="ajaximage">
+                        <img src="@Url.Content("~/images/ajax-loader.gif")" alt="Ajax Load" />
+                        Loading...
+                    </div>
+                </div>
+ 
+                <div class="toast align-items-center bg-primary bg-gradient" id="validationMessage" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex justify-content-between">
+                        <div class="toast-body">
+                           <ul>
+
+                           </ul>
+                        </div>
+                        <button type="button" class="btn-close me-2 mt-2 float-end" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+
+
+                @RenderBody()
+                @RenderSection("script", required: false)
+                @Html.Hidden("HiddenCurrentUrl", Url.Content("~"))
+
+
+            </main>
+        </div>
+
+    </div>
+
+     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+ 
+    <script src="~/lib/bootstrap-table-master/dist/bootstrap-table.js"></script>
+
+
+     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,61 @@
+﻿@model List<WebApplication3.Models.EmployeeViewModel> 
+
+@{
+    ViewData["Title"] = "Employee Details";
+    var successMessage = TempData["successMessage"]?.ToString();
+    var errorMessage = TempData["errorMessage"]?.ToString();
+    var deleteMessage = TempData["deleteMessage"]?.ToString();
+}
+
+@section script{
+    <script src="~/js/Employee/jsEmployee.js"></script>
+}
+ 
+
+<div class="HeaderButton">
+
+    <h5>@ViewData["Title"]</h5>
+    <div class="text-center">
+        <form class="emptable">
+             
+            <a class="btn btn-primary btn-sm mb-1" asp-controller="Employee" asp-action="Create"><i class='bx bx-user-plus' me-2'></i> Create</a>
+
+        </form>
+    </div>
+</div>
+
+
+<hr />
+
+@if (!string.IsNullOrWhiteSpace(deleteMessage))
+{
+    <div class="alert alert-success">
+        <strong>Deleted! </strong>@deleteMessage
+        <button type="button" class="btn btn-close float-end" data-bs-dismiss="alert" aria-label="close"></button>
+    </div>
+}
+
+
+
+<table id="table" class="table table-sm"
+       data-height="400"
+       data-toggle="table"
+       data-pagination="true"
+       data-search="true"
+       data-search-highlighter="true"
+       data-url="@Url.Content("~/Employee/GetAllEmployee")">
+    <thead>
+        <tr>
+            <th data-field="id" data-visible="false" class="text-center">Id</th>
+            <th data-field="fullName" data-sortable="true" class="text-center">Name</th>
+            <th data-field="dateOfBirth" data-sortable="true" class="text-center">Date Of Birth</th>
+            <th data-field="email" data-sortable="true" class="text-center">E-Mail</th>
+            <th data-field="salary" data-sortable="true"  class="text-center">Salary</th>
+            <th data-field="statusID" data-sortable="true" class="text-center">Emp Status</th>
+            <th data-field="operate" data-formatter="operateFormatter" class="text-center">Action</th>
+        </tr>
+    </thead>
+</table>
+
+
+

@@ -1,0 +1,65 @@
+﻿@model WebApplication3.Models.EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Delete Employee";
+    var deleteMessage = TempData["deleteMessage"]?.ToString();
+
+}
+
+
+<h3>@ViewData["Title"]</h3>
+<hr />
+
+<div class="d-flex align-items-center justify-content-center ">
+    <div class="col-6">
+        <form asp-action="Delete" method="post" autocomplete="off">
+
+            <div class="mb-3">
+                <lable class="form-label">Id</lable>
+                <input type="text" class="form-control" asp-for="Id" readonly />
+            </div>
+
+            <div class="mb-3">
+                <lable class="form-label">First Name</lable>
+                <input type="text" class="form-control" asp-for="FirstName" readonly />
+            </div>
+
+            <div class="mb-3">
+                <lable class="form-label">Last Name</lable>
+                <input type="text" class="form-control" asp-for="LastName" readonly />
+            </div>
+
+            <div class="mb-3">
+                <lable class="form-label"> Date of Birth</lable>
+                <input type="date" class="form-control" asp-for="DateOfBirth" readonly />
+            </div>
+
+            <div class="mb-3">
+                <lable class="form-label">E-mail</lable>
+                <input type="email" class="form-control" asp-for="Email" readonly />
+            </div>
+
+            <div class="mb-3">
+                <lable class="form-label">Salary</lable>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input type="text" class="form-control" asp-for="Salary" readonly />
+                </div>
+               
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Delete</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

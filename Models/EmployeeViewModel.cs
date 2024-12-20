@@ -15,7 +15,7 @@ namespace WebApplication3.Models
         [DisplayName("Last Name")]
         public string LastName { get; set; }
         [DisplayName("Date Of Birth")]
-        public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
         [DisplayName("E-Mail")]
         public string Email { get; set; }
         [DisplayName("Salary")]
@@ -41,7 +41,7 @@ namespace WebApplication3.Models
         [DisplayName("Last Name")]
         public string LastName { get; set; }
         [DisplayName("Date Of Birth")]
-        public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
         [DisplayName("E-Mail")]
         public string Email { get; set; }
         [DisplayName("Salary")]

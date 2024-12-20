@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using WebApplication3.DAL;
+using WebApplication3.modules;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 //Dependencies injection
-builder.Services.AddDbContext<EmployeeDbContext>(options =>
+builder.Services.AddDbContext<dbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 

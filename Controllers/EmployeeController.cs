@@ -2,65 +2,55 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq;
 using System.Text.RegularExpressions;
-using WebApplication3.DAL;
 using WebApplication3.Models;
-using WebApplication3.Models.DBEntities;
+using WebApplication3.modules;
+using WebApplication3.modules.EmployeeEntity;
 
 namespace WebApplication3.Controllers
 {
-    public class EmployeeController : Controller
+    public class EmployeeController : CommonController
     {
 
-
-        private readonly EmployeeDbContext _db;
+        private readonly dbContext _db;
 
         EmployeeViewModel _objModel;
 
-        public EmployeeController(EmployeeDbContext context)
+        public EmployeeController(dbContext context)
         {
-            this._db = context;
+            _db = context;
         }
  
         [HttpGet]
         public IActionResult Index()
         {
-            var employees = _db.Employee.Where(x=> x.StatusID == "A").ToList();
-            List<EmployeeViewModel> employeeList = new List<EmployeeViewModel>();
+            return View();
+        }
 
+        [HttpGet]
+        public IActionResult Create(Guid empid)
+        {
 
-            if (employees != null || employees.Count() > 0)
+            var employee = _db.Employee.SingleOrDefault(x => x.Id == empid);
+            if (employee != null)
             {
-                foreach (var employee in employees)
-                {
-                    var EmployeeViewModel = new EmployeeViewModel()
-                    {
-                        Id = employee.Id,
-                        FirstName = employee.FirstName,
-                        LastName = employee.LastName,
-                        DateOfBirth = employee.DateOfBirth,
-
-                        Email = employee.Email,
-                        Salary = employee.Salary,
-                        StatusID = employee.StatusID
-                    };
-                    employeeList.Add(EmployeeViewModel);
-                }
-                return View(employeeList);
+                EmployeeViewModel employeeDetails = GetEditDetails(empid);
+                return View(employeeDetails);
             }
-            return View(employeeList);
+            return View();
+
         }
 
         public List<EmployeeViewModelList> GetActiveEmployee()
         {
             List<EmployeeViewModelList> EmployeeList = (from dbEmp in _db.Employee
-                                                        where dbEmp.StatusID=="A"
+                                                        where dbEmp.StatusID == "A"
                                                         orderby dbEmp.FirstName descending
                                                         select new EmployeeViewModelList
                                                         {
                                                             Id = dbEmp.Id,
                                                             FirstName = dbEmp.FirstName,
                                                             LastName = dbEmp.LastName,
-                                                            DateOfBirth = dbEmp.DateOfBirth,
+                                                            DateOfBirth = ConvertToUserDate(dbEmp.DateOfBirth),
                                                             Email = dbEmp.Email,
                                                             Salary = dbEmp.Salary,
                                                             StatusID = dbEmp.StatusID,
@@ -79,7 +69,7 @@ namespace WebApplication3.Controllers
                                                             Id = dbEmp.Id,
                                                             FirstName = dbEmp.FirstName,
                                                             LastName = dbEmp.LastName,
-                                                            DateOfBirth = dbEmp.DateOfBirth,
+                                                            DateOfBirth = ConvertToUserDate(dbEmp.DateOfBirth),
                                                             Email = dbEmp.Email,
                                                             Salary = dbEmp.Salary,
                                                             StatusID = dbEmp.StatusID,
@@ -98,15 +88,15 @@ namespace WebApplication3.Controllers
                 Employee employee = _db.Employee.SingleOrDefault(x => x.Id == empid);
                 if (employee != null)
                 {
- 
-                        employeeView.Id = employee.Id;
-                        employeeView.FirstName = employee.FirstName;
-                        employeeView.LastName = employee.LastName;
-                        employeeView.DateOfBirth = employee.DateOfBirth;
-                        employeeView.Email = employee.Email;
-                        employeeView.Salary = employee.Salary;
+
+                    employeeView.Id = employee.Id;
+                    employeeView.FirstName = employee.FirstName;
+                    employeeView.LastName = employee.LastName;
+                    employeeView.DateOfBirth = ConvertToUserDate(employee.DateOfBirth);
+                    employeeView.Email = employee.Email;
+                    employeeView.Salary = employee.Salary;
                     employeeView.StatusID = employee.StatusID;
- 
+
 
                     return employeeView;
                 }
@@ -123,20 +113,6 @@ namespace WebApplication3.Controllers
             }
         }
  
-        [HttpGet]
-        public IActionResult Create(Guid empid)
-        {
-            
-            var employee = _db.Employee.SingleOrDefault(x => x.Id == empid);
-            if (employee != null)
-            {
-                EmployeeViewModel employeeDetails = GetEditDetails(empid);
-                return View(employeeDetails);
-            }
-            return View();
-
-        }
-
         public ActionResult SaveData(EmployeeViewModel employeedata)
         {
             try
@@ -145,11 +121,9 @@ namespace WebApplication3.Controllers
                 if (existdata != null)
                 {
 
-                    existdata.Id = employeedata.Id;
                     existdata.FirstName = employeedata.FirstName;
                     existdata.LastName = employeedata.LastName;
-                    existdata.DateOfBirth = employeedata.DateOfBirth;
-
+                    existdata.DateOfBirth = convertToDate(employeedata.DateOfBirth);
                     existdata.Email = employeedata.Email;
                     existdata.Salary = employeedata.Salary;
                     existdata.StatusID = "A";
@@ -168,12 +142,15 @@ namespace WebApplication3.Controllers
 
                     Employee employee = new Employee();
 
+                    employee.Id = Guid.NewGuid();
                     employee.FirstName = employeedata.FirstName;
                     employee.LastName = employeedata.LastName;
-                    employee.DateOfBirth = employeedata.DateOfBirth;
+                    employee.DateOfBirth = convertToDate(employeedata.DateOfBirth);
                     employee.Email = employeedata.Email;
                     employee.Salary = employeedata.Salary;
                     employee.StatusID = "A";
+                    employee.Creationdate = DateTime.Now;
+
 
                     _db.Employee.Add(employee);
                     _db.SaveChanges();

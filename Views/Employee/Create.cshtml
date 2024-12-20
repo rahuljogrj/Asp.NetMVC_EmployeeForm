@@ -27,59 +27,57 @@
  
 <div class="form-group" id="Header">
         <div class="row">
+
         <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
             <div class="form-horizontal">
                 <div class="form-group">
-                    <lable class="form-label col-sm-6 col-md-4 col-lg-4">First Name</lable>
-                <input type="text" class="form-control" asp-for="FirstName" id="FirstName" data-required="true" data-message="First Name cannot be blank!" />
-                <span asp-validation-for="FirstName" class="text-danger"> </span>
-             </div> 
+                    <lable for="FirstName" class="form-label col-sm-6 col-md-4 col-lg-4">First Name</lable>
+                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control",@id = "FirstName",@data_required = "true",@data_message = "First Name cannot be blank!"})
+                </div>
             </div> 
-            </div>
+        </div>
 
 
         <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
             <div class="form-horizontal">
                 <div class="form-group">
                     <lable class="form-label col-sm-6 col-md-4 col-lg-4">Last Name</lable>
-            <input type="text" class="form-control" asp-for="LastName" id="LastName" data-reuired="true" data-message="Last Name cannot be blank!" />
-                <span asp-validation-for="LastName" class="text-danger"> </span>
-        </div>
-    </div>
-</div>
-
-            <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
-                <div class="form-horizontal">
-                    <div class="form-group">
-                    <lable class="form-label col-sm-6 col-md-4 col-lg-4"> Date of Birth</lable>
-            <input type="date" class="form-control" asp-for="DateOfBirth" id="DateOfBirth" data-required="true" data-message="Date Of Birth cannot be blank!" />
-                <span asp-validation-for="DateOfBirth" class="text-danger"> </span>
-            </div>
-            </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
-                <div class="form-horizontal">
-                    <div class="form-group">
-                    <lable class="form-label col-sm-6 col-md-4 col-lg-4">E-mail</lable>
-            <input type="email" class="form-control" asp-for="Email" id="Email" data-required="true" data-message="Email cannot be blank!" />
-                <span asp-validation-for="Email" class="text-danger"> </span>
-            </div>
-            </div>
-            </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
-                        <div class="form-horizontal">
-                            <div class="form-group">
-                    <lable class="form-label col-sm-6 col-md-4 col-lg-4">Salary</lable>
-                <div class="input-group">
-                    <span class="input-group-text">$</span>
-                <input type="text" onkeypress="return isNumeric(event)" class="form-control" asp-for="Salary" id="Salary" data-required="true" data-message="Salary cannot be blank!" />
+                    @*<input type="text" class="form-control" asp-for="LastName" id="LastName" data-required="true" data-message="Last Name cannot be blank!" />*@
+                    @Html.TextBoxFor(model=> model.LastName, new {@class = "form-control", @id="LastName", @data_required = "true", @data_message="Last Name cannot be blank!"})
                 </div>
-                <span asp-validation-for="Salary" class="text-danger"> </span>
             </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <lable class="form-label col-sm-6 col-md-4 col-lg-4"> Date of Birth</lable>
+                    @*<input type="date" class="form-control" asp-for="DateOfBirth" id="DateOfBirth" data-required="true" data-message="Date Of Birth cannot be blank!" />*@
+                    @Html.TextBoxFor(model=> model.DateOfBirth, new {@class = "form-control txtdate", @id="DateOfBirth", @data_required = "true", @data_message="Date Of Birth cannot be blank!"})
+                </div>
             </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <lable class="form-label col-sm-6 col-md-4 col-lg-4">E-mail</lable>
+                    <input type="email" class="form-control" asp-for="Email" id="Email" data-required="true" data-message="Email cannot be blank!" />
+                </div>
             </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <lable class="form-label col-sm-6 col-md-4 col-lg-4">Salary</lable>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="text" onkeypress="return isNumeric(event)" class="form-control" asp-for="Salary" id="Salary" data-required="true" data-message="Salary cannot be blank!" />
+                    </div>
+                </div>
+            </div>
+        </div>
  
           @*  <div class="text-center">
                 <button id="addemployee" class="btn btn-sm btn-primary" onclick="Submit()">Submit</button>
@@ -93,7 +91,7 @@
        data-pagination="true"
        data-search="true"
        data-search-highlighter="true"
-       data-url="@Url.Content("~/Employee/GetEmployee")">
+       data-url="@Url.Content("~/Employee/GetActiveEmployee")">
     <thead>
         <tr>
             <th data-field="id" data-visible="false" class="text-center">Id</th>
@@ -102,7 +100,7 @@
             <th data-field="email" class="text-center">E-Mail</th>
             <th data-field="salary" class="text-center">Salary</th>
             <th data-field="statusID" class="text-center">Emp Status</th>
-            <th data-field="operate" data-formatter="operateFormatter" class="text-center">Action</th>
+            <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents" class="text-center">Action</th>
         </tr>
     </thead>
 </table>

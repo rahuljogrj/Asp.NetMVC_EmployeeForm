@@ -21,7 +21,6 @@ namespace WebApplication3.Controllers
             this._db = context;
         }
  
-
         [HttpGet]
         public IActionResult Index()
         {
@@ -51,7 +50,7 @@ namespace WebApplication3.Controllers
             return View(employeeList);
         }
 
-        public List<EmployeeViewModelList> GetEmployee()
+        public List<EmployeeViewModelList> GetActiveEmployee()
         {
             List<EmployeeViewModelList> EmployeeList = (from dbEmp in _db.Employee
                                                         where dbEmp.StatusID=="A"
@@ -70,7 +69,6 @@ namespace WebApplication3.Controllers
 
             return EmployeeList;
         }
-
 
         public List<EmployeeViewModelList> GetAllEmployee()
         {
@@ -91,7 +89,6 @@ namespace WebApplication3.Controllers
             return EmployeeList;
         }
 
- 
         public EmployeeViewModel GetEditDetails(Guid empid)
         {
             EmployeeViewModel employeeView = new EmployeeViewModel();
@@ -195,15 +192,52 @@ namespace WebApplication3.Controllers
 
         }
 
-        public ActionResult Delete(Guid Id)
+        public ActionResult ActivateEmp(string empid)
         {
+            Guid Guidempid = Guid.Parse(empid);
             try
             {
-                Employee delEmployee = _db.Employee.Where(x => x.Id == Id).SingleOrDefault();
+                Employee delEmployee = _db.Employee.Where(x => x.Id == Guidempid).SingleOrDefault();
 
                 if (delEmployee == null)
                 {
-                    TempData["deleteMessage"] = $"Employee not available with Id: {Id}";
+                    TempData["deleteMessage"] = $"Employee not available with Id: {delEmployee.FirstName}";
+                    return Json(new { message = TempData["deleteMessage"] });
+                }
+                if (delEmployee.StatusID == "A")
+                {
+                    TempData["deleteMessage"] = $"Employee Already Active...";
+                    return Json(new { message = TempData["deleteMessage"] });
+                }
+
+                delEmployee.StatusID = "A";
+                _db.Employee.Update(delEmployee);
+                _db.SaveChanges();
+                TempData["deleteMessage"] = $"Employee Activated successfully...";
+                return Json(new { message = TempData["deleteMessage"] });
+
+
+            }
+            catch (Exception ex)
+            {
+                TempData["deleteMessage"] = ex.Message;
+                return Json(new { message = TempData["deleteMessage"] });
+            }
+
+        }
+
+        public ActionResult Delete(string empid)
+        {
+
+            Guid Guidempid = Guid.Parse(empid);
+
+            try
+            {
+                Employee delEmployee = _db.Employee.Where(x => x.Id == Guidempid).SingleOrDefault();
+
+                if (delEmployee == null)
+                {
+                    TempData["deleteMessage"] = $"Employee not available with First Name: {delEmployee.FirstName}";
                     return RedirectToAction("Index");
                 }
 
@@ -211,14 +245,18 @@ namespace WebApplication3.Controllers
                 _db.Employee.Update(delEmployee);
                 _db.SaveChanges();
                 TempData["deleteMessage"] = $"Employee deleted successfully...";
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return Json(new { message = TempData["deleteMessage"] });
+
 
 
             }
             catch (Exception ex)
             {
                 TempData["deleteMessage"] = ex.Message;
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return Json(new { message = TempData["deleteMessage"] });
+
             }
 
         }

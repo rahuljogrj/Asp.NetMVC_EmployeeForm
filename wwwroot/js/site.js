@@ -10,8 +10,14 @@ $(document).ready(function () {
     var controllerName = segments[1]; // Assuming a standard ASP.NET MVC structure
 
     controller = controllerName;
-    count= countRecord();
-    $("#CountText").text(`Total ${controllerName} Record`);
+
+    if (controller != "Employee") {
+        $('#CountMainDiv').hide();
+    }
+    else {
+        count = countRecord();
+        $("#CountText").text(`Total ${controllerName} Record`);
+    }
 
 })
 
@@ -102,9 +108,6 @@ function countRecord()
                     count = "--";
                 }
                 $('#CountRecord strong').text(`${count}`);
-
-                console.log(`Count: ${count}`);
-
             },
             complete: function () {
                 dvajaxloadhide()
@@ -173,7 +176,6 @@ function isNumeric(event) {
     }
 }
 
-
 function showToast(messages) {
     // Join all messages into a string with line breaks
     const message = messages.join('<br>');
@@ -191,3 +193,15 @@ function dvajaxloadhide() {
 
     $("#dvajax").hide();
 }
+
+
+$("body").on("focusin", "input.txtdate", function () {
+ 
+    $(this).datepicker({
+        uiLibrary: 'bootstrap5',
+        format: 'dd/mm/yyyy',
+        changeMonth: true,
+        changeYear: true
+    });
+ 
+});

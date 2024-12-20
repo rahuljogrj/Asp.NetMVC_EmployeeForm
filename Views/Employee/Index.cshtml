@@ -30,7 +30,7 @@
 @if (!string.IsNullOrWhiteSpace(deleteMessage))
 {
     <div class="alert alert-success">
-        <strong>Deleted! </strong>@deleteMessage
+        <strong>@deleteMessage</strong>
         <button type="button" class="btn btn-close float-end" data-bs-dismiss="alert" aria-label="close"></button>
     </div>
 }
@@ -52,7 +52,7 @@
             <th data-field="email" data-sortable="true" class="text-center">E-Mail</th>
             <th data-field="salary" data-sortable="true"  class="text-center">Salary</th>
             <th data-field="statusID" data-sortable="true" class="text-center">Emp Status</th>
-            <th data-field="operate" data-formatter="operateFormatter" class="text-center">Action</th>
+            <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents" class="text-center">Action</th>
         </tr>
     </thead>
 </table>

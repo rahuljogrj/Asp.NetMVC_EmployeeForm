@@ -331,3 +331,36 @@ margin:5px;
 .form-group {
     display: flex;
 }
+#CountMainDiv {
+    display: hidden;
+}
+
+#CountData {
+    background-color: aqua;
+    border-radius: 20px;
+    margin-right: 0px;
+    transition: 2s;
+}
+
+ 
+.txtdate {
+    font-size: 12px;  
+}
+
+
+.txtdate .txtdate-switch,
+.txtdate .prev,
+.txtdate .next {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+ .txtdate table tr td,
+.txtdate table tr th {
+    font-size: 13px;
+}
+
+ .txtdate table tr td.today {
+    font-size: 13px;
+    font-weight: bold;
+}

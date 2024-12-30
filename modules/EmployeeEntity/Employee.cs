@@ -37,6 +37,9 @@ public partial class Employee
     [Unicode(false)]
     public string StatusID { get; set; }
 
+    public Guid DesignationID { get; set; }
+
+
     [Column(TypeName = "datetime")]
     public DateTime? Creationdate { get; set; }
 }

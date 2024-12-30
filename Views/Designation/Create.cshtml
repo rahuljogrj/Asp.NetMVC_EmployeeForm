@@ -1,0 +1,71 @@
+﻿ 
+@model WebApplication3.Models.DesignationModel
+
+@section script{
+    <script src="~/js/Designation/jsDesignation.js"></script>
+}
+
+@{
+    ViewData["Title"] = "Master";
+}
+
+
+<div class="HeaderButton">
+    <h5>@ViewData["Title"]</h5>
+    <div class="text-center">
+        <button id="addemployee" class="btn btn-sm btn-primary" onclick="Submit()">Submit</button>
+    </div>
+</div>
+
+<hr />
+
+
+<input type="hidden" class="form-control" asp-for="Id" id="Id" disabled />
+
+
+<div class="" id="Header">
+    <div class="row">
+
+        <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <lable for="FirstName" class="form-label col-sm-6 col-md-4 col-lg-4">Code</lable>
+                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control input-sm",@id = "Code",@data_required = "true",@placeholder="Enter Code" ,@data_message = "Enter Code"})
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <lable class="form-label col-sm-6 col-md-4 col-lg-4">Name</lable>
+                    @Html.TextBoxFor(model=> model.Name, new {@class = "form-control input-sm", @id="Name", @data_required = "true",@placeholder="Enter Name", @data_message="Enter Name"})
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<table id="tblDesignation" class="table table-sm"
+       data-height="400"
+       data-toggle="table"
+       data-pagination="true"
+       data-search="true"
+       data-search-highlighter="true"
+       data-url="@Url.Content("~/Designation/GetAllDesignation")">
+    <thead>
+        <tr>
+            <th data-field="id" data-visible="false" class="text-center">Id</th>
+            <th data-field="code" class="text-center">Code</th>
+            <th data-field="name" class="text-center">Name</th>
+            <th data-field="masterType" class="text-center">Type</th>
+            <th data-field="status" class="text-center">Status</th>
+            <th data-field="operate" data-formatter="operateFormatterDesig" data-events="operateEventsDesig" class="text-center">Action</th>
+        </tr>
+    </thead>
+</table>
+
+
+

@@ -137,17 +137,27 @@ function elementValid(parentId) {
     // Select the parent container
     const parent = $('#' + parentId);
 
-    const requiredFields = parent.find('input[data-required="true"]');
+    const requiredFields = parent.find('input[data-required="true"], select[data-required="true"]');
 
     requiredFields.each(function () {
         const field = $(this);
 
-        if ($.trim(field.val()) === '') {
+        // Validate text input fields
+        if ($(this).is('input') && $.trim(field.val()) === '') {
             count += 1;
             messageList.push(count + ") " + $(this).data('message'));
             message += count + ") " + $(this).data('message') + "\n";
-             isValid = false; 
+            isValid = false;
         }
+
+        // Validate dropdown fields
+        if ($(this).is('select') && ($.trim(field.val()) === '' || $.trim(field.val()) === '0')) {
+            count += 1;
+            messageList.push(count + ") " + $(this).data('message'));
+            message += count + ") " + $(this).data('message') + "\n";
+            isValid = false;
+        }
+
         if ($(this).is("[data-ele-email='true']")) {
             jVal.email($(this));
         }

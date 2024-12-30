@@ -5,7 +5,7 @@ function Submit() {
     if (elementValid('Header')) {
 
         var employeedata = {
-            "id": "", "firstName": "", "lastName": "", "dateOfBirth": "", "email": "", "salary": ""
+            "id": "", "firstName": "", "lastName": "", "dateOfBirth": "", "email": "", "salary": "","designationID":""
         }
 
         employeedata.id = $('#Id').val();
@@ -14,6 +14,7 @@ function Submit() {
         employeedata.dateOfBirth = $('#DateOfBirth').val();
         employeedata.email = $('#Email').val();
         employeedata.salary = $('#Salary').val();
+        employeedata.designationID = $('#DesignationID').val();
 
 
         var url1 = absURL('/Employee/SaveData');
@@ -92,9 +93,6 @@ function ActivateEmployee(empid) {
 };
 
 
-
-
-
 function operateFormatter(value, row, index) {
     return [
         '<div class="btn-group btn-group-sm">',
@@ -132,8 +130,6 @@ window.operateEvents = {
     }
 }
 
-
-
 function edit(empid){
 
 
@@ -157,26 +153,4 @@ function edit(empid){
     });
 
 }
-
-
-
-//function operateFormatter(value, row, index) {
-
-//    return `
-//        <div class="btn-group btn-group-sm">
-//            <a href="/Employee/Create?empid=${row.id}" class="me-2" style="font-size:12px;">
-//                <i class='bx bxs-comment-edit'></i>Edit 
-//            </a>
-//           <a href="/Employee/Delete/${row.id}" class="me-2" style="font-size:12px;">
-//                <i class='bx bx-message-x'></i> Delete
-//           </a>
-//           <a href="/Employee/ActivateEmp/${row.id}" class="me-2" style="font-size:12px;">
-//                <i class='bx bxs-comment-edit'></i> Active
-//           </a>
-//        </div>`;
-
-//}
-
-
-
 

@@ -25,14 +25,14 @@
 <input type="hidden" class="form-control" asp-for="Id" id="Id" disabled />
 
  
-<div class="form-group" id="Header">
+<div class="" id="Header">
         <div class="row">
 
         <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
             <div class="form-horizontal">
                 <div class="form-group">
                     <lable for="FirstName" class="form-label col-sm-6 col-md-4 col-lg-4">First Name</lable>
-                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control",@id = "FirstName",@data_required = "true",@data_message = "First Name cannot be blank!"})
+                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control input-sm",@id = "FirstName",@data_required = "true",@data_message = "First Name cannot be blank!"})
                 </div>
             </div> 
         </div>
@@ -43,7 +43,7 @@
                 <div class="form-group">
                     <lable class="form-label col-sm-6 col-md-4 col-lg-4">Last Name</lable>
                     @*<input type="text" class="form-control" asp-for="LastName" id="LastName" data-required="true" data-message="Last Name cannot be blank!" />*@
-                    @Html.TextBoxFor(model=> model.LastName, new {@class = "form-control", @id="LastName", @data_required = "true", @data_message="Last Name cannot be blank!"})
+                    @Html.TextBoxFor(model=> model.LastName, new {@class = "form-control input-sm", @id="LastName", @data_required = "true", @data_message="Last Name cannot be blank!"})
                 </div>
             </div>
         </div>
@@ -62,7 +62,7 @@
             <div class="form-horizontal">
                 <div class="form-group">
                     <lable class="form-label col-sm-6 col-md-4 col-lg-4">E-mail</lable>
-                    <input type="email" class="form-control" asp-for="Email" id="Email" data-required="true" data-message="Email cannot be blank!" />
+                    <input type="email" class="form-control input-sm" asp-for="Email" id="Email" data-required="true" data-message="Email cannot be blank!" />
                 </div>
             </div>
         </div>
@@ -72,12 +72,22 @@
                 <div class="form-group">
                     <lable class="form-label col-sm-6 col-md-4 col-lg-4">Salary</lable>
                     <div class="input-group">
-                        <span class="input-group-text">$</span>
+                        @*<span class="input-group-text">$</span>*@
                         <input type="text" onkeypress="return isNumeric(event)" class="form-control" asp-for="Salary" id="Salary" data-required="true" data-message="Salary cannot be blank!" />
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-4  mb-3">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <lable class="form-label col-sm-6 col-md-4 col-lg-4">Designation </lable>
+                    @Html.DropDownListFor(model=> model.DesignationID ,Model.lstDesignation , new {@class = "form-control", @id="DesignationID", @data_required = "true", @data_message="Select Designation..."})
+                </div>
+            </div>
+        </div>
+
  
           @*  <div class="text-center">
                 <button id="addemployee" class="btn btn-sm btn-primary" onclick="Submit()">Submit</button>
@@ -99,6 +109,8 @@
             <th data-field="dateOfBirth" class="text-center">Date Of Birth</th>
             <th data-field="email" class="text-center">E-Mail</th>
             <th data-field="salary" class="text-center">Salary</th>
+            <th data-field="designationID" data-visible="false" class="text-center">DesignationID</th>
+            <th data-field="designation" class="text-center">Designation</th>
             <th data-field="statusID" class="text-center">Emp Status</th>
             <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents" class="text-center">Action</th>
         </tr>

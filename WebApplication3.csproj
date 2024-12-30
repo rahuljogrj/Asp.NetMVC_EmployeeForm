@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\js\Employee\" />
+    <Folder Include="wwwroot\js\Designation\" />
   </ItemGroup>
 
 </Project>

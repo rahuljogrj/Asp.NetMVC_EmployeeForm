@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -18,6 +19,7 @@ namespace WebApplication3.Controllers
         public EmployeeController(dbContext context)
         {
             _db = context;
+            _objModel = new EmployeeViewModel();
         }
  
         [HttpGet]
@@ -29,20 +31,41 @@ namespace WebApplication3.Controllers
         [HttpGet]
         public IActionResult Create(Guid empid)
         {
-
+ 
             var employee = _db.Employee.SingleOrDefault(x => x.Id == empid);
             if (employee != null)
             {
-                EmployeeViewModel employeeDetails = GetEditDetails(empid);
-                return View(employeeDetails);
+                _objModel = GetEditDetails(empid);
             }
-            return View();
 
+            _objModel.lstDesignation = GetDesignationList(); 
+
+            return View(_objModel);
+
+        }
+
+        public SelectList GetDesignationList()
+        {
+            List<SelectListItem> listitems = new List<SelectListItem>();
+
+            listitems = (from dbDesig in _db.MasterData
+                         where dbDesig.MasterType == "Designation" && dbDesig.Status == "A"
+                         select new SelectListItem
+                         {
+                             Value = dbDesig.MasterID.ToString(),
+                             Text = dbDesig.Name
+                         }).ToList();
+
+
+            listitems.Insert(0, GetSelect());
+            SelectList slDesig = new SelectList(listitems, "Value", "Text");
+            return slDesig;
         }
 
         public List<EmployeeViewModelList> GetActiveEmployee()
         {
             List<EmployeeViewModelList> EmployeeList = (from dbEmp in _db.Employee
+                                                        join dbDesig in _db.MasterData on dbEmp.DesignationID equals dbDesig.MasterID
                                                         where dbEmp.StatusID == "A"
                                                         orderby dbEmp.FirstName descending
                                                         select new EmployeeViewModelList
@@ -54,6 +77,8 @@ namespace WebApplication3.Controllers
                                                             Email = dbEmp.Email,
                                                             Salary = dbEmp.Salary,
                                                             StatusID = dbEmp.StatusID,
+                                                            DesignationID = dbDesig.MasterID,
+                                                            Designation = dbDesig.Name,
                                                             FullName = dbEmp.FirstName + " " + dbEmp.LastName
                                                         }).ToList();
 
@@ -63,6 +88,7 @@ namespace WebApplication3.Controllers
         public List<EmployeeViewModelList> GetAllEmployee()
         {
             List<EmployeeViewModelList> EmployeeList = (from dbEmp in _db.Employee
+                                                        join dbDesig in _db.MasterData on dbEmp.DesignationID equals dbDesig.MasterID
                                                         orderby dbEmp.FirstName descending
                                                         select new EmployeeViewModelList
                                                         {
@@ -73,6 +99,8 @@ namespace WebApplication3.Controllers
                                                             Email = dbEmp.Email,
                                                             Salary = dbEmp.Salary,
                                                             StatusID = dbEmp.StatusID,
+                                                            DesignationID = dbDesig.MasterID,
+                                                            Designation = dbDesig.Name,
                                                             FullName = dbEmp.FirstName + " " + dbEmp.LastName
                                                         }).ToList();
 
@@ -95,6 +123,7 @@ namespace WebApplication3.Controllers
                     employeeView.DateOfBirth = ConvertToUserDate(employee.DateOfBirth);
                     employeeView.Email = employee.Email;
                     employeeView.Salary = employee.Salary;
+                    employeeView.DesignationID = employee.DesignationID;
                     employeeView.StatusID = employee.StatusID;
 
 
@@ -127,6 +156,7 @@ namespace WebApplication3.Controllers
                     existdata.Email = employeedata.Email;
                     existdata.Salary = employeedata.Salary;
                     existdata.StatusID = "A";
+                    existdata.DesignationID = employeedata.DesignationID;
 
                     _db.Employee.Update(existdata);
                     _db.SaveChanges();
@@ -150,7 +180,7 @@ namespace WebApplication3.Controllers
                     employee.Salary = employeedata.Salary;
                     employee.StatusID = "A";
                     employee.Creationdate = DateTime.Now;
-
+                    employee.DesignationID = employeedata.DesignationID;
 
                     _db.Employee.Add(employee);
                     _db.SaveChanges();

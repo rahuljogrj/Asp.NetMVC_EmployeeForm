@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Globalization;
 
 namespace WebApplication3.Controllers
@@ -25,6 +26,17 @@ namespace WebApplication3.Controllers
                 ss = strdate.Value.ToString("dd/MM/yyyy");
             }
             return ss;
+        }
+
+
+        public SelectListItem GetSelect()
+        {
+            SelectListItem listitem = new SelectListItem();
+            listitem.Text = "---Select---";
+            listitem.Value = "";
+            listitem.Selected = true;
+
+            return listitem;
         }
 
     }

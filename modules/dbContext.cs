@@ -17,6 +17,8 @@ namespace WebApplication3.modules
 
         public virtual DbSet<Employee> Employee { get; set; }
 
+        public virtual DbSet<MasterData> MasterData { get; set; }
+
         public virtual DbSet<EmployeesSample> EmployeesSample { get; set; }
 
         public virtual DbSet<LoginUser> LoginUser { get; set; }

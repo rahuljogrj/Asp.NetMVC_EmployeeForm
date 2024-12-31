@@ -19,11 +19,7 @@ namespace WebApplication3.modules
 
         public virtual DbSet<MasterData> MasterData { get; set; }
 
-        public virtual DbSet<EmployeesSample> EmployeesSample { get; set; }
-
-        public virtual DbSet<LoginUser> LoginUser { get; set; }
-
-        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<UserMaster> UserMaster { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer("Data Source=192.168.1.205,21443;Initial Catalog=RahulJogPractice;User ID=sa;Password=ibis@123;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");

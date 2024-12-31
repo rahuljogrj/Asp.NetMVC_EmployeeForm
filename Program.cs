@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using WebApplication3.modules;
 
@@ -11,6 +12,30 @@ builder.Services.AddDbContext<dbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Session expires after 30 minutes of inactivity
+    options.Cookie.HttpOnly = true;                // Protect cookies from being accessed by JavaScript
+    options.Cookie.IsEssential = true;             // Required for GDPR compliance
+});
+
+builder.Services.AddHttpContextAccessor();
+
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/LogIn/LogIn"; // Redirect to login page
+    });
+
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+});
+
+
+
 
 var app = builder.Build();
 
@@ -19,16 +44,18 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
 }
+
 app.UseStaticFiles();
+app.UseSession();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+    pattern: "{controller=LogIn}/{action=LogIn}/{id?}");
 
 
 //app.MapControllerRoute(

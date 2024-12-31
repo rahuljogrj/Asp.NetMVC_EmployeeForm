@@ -26,6 +26,33 @@ body {
     transition: .5s
 }
 
+
+#loginMainDiv {
+    margin: auto;
+    display:block;
+    border: 2px solid black;
+    padding: 40px 20px ;
+    border-radius: 10px;
+    background-color:#deefe9;
+}
+
+#SignUpMainDiv {
+    position: fixed;
+    top: 20px;
+    left: 500px;
+    border: 2px solid black;
+    padding: 40px 20px;
+    border-radius: 10px;
+    background-color: #deefe9;
+}
+
+/* Hide all sections by default */
+.section {
+    display: none;
+}
+ 
+
+
 a {
     text-decoration: none
 }
@@ -94,10 +121,11 @@ a {
 .nav_logo {
     margin-bottom: 1.5rem
 }
-
-.nav_list{
-    color:black;
+ /*
+.nav_name::before, .nav_icon::before {
+    color: #bfbfb7;
 }
+*/
 
 .nav_logo-icon {
     font-size: 1.25rem;

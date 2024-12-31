@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,11 +19,17 @@ namespace WebApplication3.Controllers
 
         public IActionResult Index()
         {
+            var username = HttpContext.Session.GetString("Username");
+            ViewBag.Username = username;
+
             return View();
         }
 
         public IActionResult Privacy()
         {
+            var username = HttpContext.Session.GetString("Username");
+            ViewBag.Username = username;
+
             return View();
         }
 

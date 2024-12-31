@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication3.Models;
 using WebApplication3.modules;
@@ -6,6 +7,7 @@ using WebApplication3.modules.EmployeeEntity;
 
 namespace WebApplication3.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class DesignationController : Controller
     {
 
@@ -20,12 +22,17 @@ namespace WebApplication3.Controllers
 
         public IActionResult Index()
         {
+            var username = HttpContext.Session.GetString("Username");
+            ViewBag.Username = username;
+
             return View();
         }
 
         [HttpGet]
         public IActionResult Create(Guid DesignationId)
         {
+            var username = HttpContext.Session.GetString("Username");
+            ViewBag.Username = username;
 
             var desig = _db.MasterData.SingleOrDefault(x => x.MasterID == DesignationId);
             if (desig != null)

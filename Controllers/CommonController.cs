@@ -6,7 +6,7 @@ namespace WebApplication3.Controllers
 {
     public class CommonController : Controller
     {
- 
+
         public DateTime convertToDate(string dateStr)
         {
             string format = "dd/MM/yyyy"; // Format matching the input string

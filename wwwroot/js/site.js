@@ -180,8 +180,6 @@ function isNumeric(event) {
     if (charCode == 8 || charCode == 46 || charCode == 13 || (charCode >= 48 && charCode <= 57)) {
         return true;
     } else {
-        // Prevent other characters
-        event.preventDefault();
         return false;
     }
 }

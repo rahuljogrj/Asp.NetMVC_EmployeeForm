@@ -21,7 +21,6 @@ function Submit() {
         $.ajax({
             url: url1,
             data: employeedata,
-
             type: "POST",
             dataType: "json",
             beforeSend: function () {

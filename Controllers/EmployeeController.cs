@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq;
@@ -9,6 +10,7 @@ using WebApplication3.modules.EmployeeEntity;
 
 namespace WebApplication3.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class EmployeeController : CommonController
     {
 
@@ -25,13 +27,17 @@ namespace WebApplication3.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var username = HttpContext.Session.GetString("Username");
+            ViewBag.Username = username;
             return View();
         }
 
         [HttpGet]
         public IActionResult Create(Guid empid)
         {
- 
+            var username = HttpContext.Session.GetString("Username");
+            ViewBag.Username = username;
+
             var employee = _db.Employee.SingleOrDefault(x => x.Id == empid);
             if (employee != null)
             {

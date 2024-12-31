@@ -33,7 +33,7 @@ namespace WebApplication3.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginCheckAsync(LogInModel mdlLogin)
         {
-            UserMaster checkUser = _db.UserMaster.Where(x => x.UserName == mdlLogin.Username && x.Password == mdlLogin.Password).SingleOrDefault();
+            UserMaster checkUser = _db.UserMaster.Where(x => x.UserName == mdlLogin.Username && x.Password == mdlLogin.Password && x.Status=="A").SingleOrDefault();
             if (checkUser != null)
             {
                 HttpContext.Session.SetString("Username", checkUser.UserName);
